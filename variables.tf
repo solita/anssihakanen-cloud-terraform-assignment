@@ -1,7 +1,7 @@
 variable "rg" {
   type        = string
   description = "Name of the resource group"
-  default     = "rg-academy2024-anssihakanen"
+  default     = "rg-terraformresources-anssihakanen"
 }
 
 variable "location" {
@@ -9,12 +9,16 @@ variable "location" {
   default = "West Europe"
 }
 
-variable "sa" {
+variable "owner" {
   type    = string
-  default = "saacademyanssihakanen001"
+  default = "anssi.hakanen@solita.fi"
 }
 
-variable "container" {
+variable "dueDate" {
   type    = string
-  default = "blobacademyanssihakanen001"
+  default = "2024-05-01"
+}
+
+variable "sa-access-key" {
+  type = string
 }
