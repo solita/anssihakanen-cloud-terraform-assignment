@@ -4,7 +4,6 @@ resource "azurerm_container_group" "container_group" {
   resource_group_name = var.rg
   os_type             = "Linux"
   ip_address_type     = "Public"
-  dns_name_label      = "clamav"
   
 
   container {

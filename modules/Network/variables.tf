@@ -1,6 +1,6 @@
 variable "rg" {
+  type        = string
   description = "Name of the resource group"
-  default = "rg-academy2024-anssihakanen"
 }
 
 variable "location" {
