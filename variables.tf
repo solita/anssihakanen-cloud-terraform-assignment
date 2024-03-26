@@ -18,7 +18,3 @@ variable "dueDate" {
   type    = string
   default = "2024-05-01"
 }
-
-variable "sa-access-key" {
-  type = string
-}

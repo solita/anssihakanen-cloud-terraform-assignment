@@ -1,18 +1,17 @@
 variable "rg" {
-  type        = string
-  description = "Name of the resource group"
+  type = string
 }
 
 variable "location" {
-  type    = string
+  type = string
 }
 
 variable "owner" {
-    type = string
+  type = string
 }
 
 variable "dueDate" {
-    type = string
+  type = string
 }
 
 variable "sa" {

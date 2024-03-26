@@ -1,22 +1,27 @@
-resource "azurerm_eventgrid_topic" "eventgrid-topic" {
+resource "azurerm_storage_queue" "storage_queue" {
+    name = "sq-anssihakanen-terraform"
+    storage_account_name = var.sa.name
+}
+
+
+resource "azurerm_eventgrid_system_topic" "eventgrid_topic" {
   name                = "eventgrid-topic"
   location            = var.location
   resource_group_name = var.rg
+  source_arm_resource_id = var.sa.id
+  topic_type = "Microsoft.Storage.StorageAccounts"
   tags = {
     owner = var.owner
     dueDate = var. dueDate
   }
 }
 
-resource "azurerm_eventgrid_event_subscription" "event_subscription" {
-  name   = "event_subscription"
-  scope  = "${modules/Storage.storage_account.name}"
-  labels = ["azure-functions-event-grid-terraform"]
-  azure_function_endpoint {
-    function_id = "${modules/FunctionApp.function_app.name}" 
-
-    # defaults, specified to avoid "no-op" changes when 'apply' is re-ran
-    max_events_per_batch              = 1
-    preferred_batch_size_in_kilobytes = 64
-  }
+resource "azurerm_eventgrid_system_topic_event_subscription" "event_subscription" {
+  name = "es-anssihakanen-terraform"
+    system_topic = azurerm_eventgrid_system_topic.eventgrid_topic.name
+    resource_group_name = var.rg
+    storage_queue_endpoint {
+        storage_account_id = var.sa.id
+        queue_name = azurerm_storage_queue.storage_queue.name
+    }
 }

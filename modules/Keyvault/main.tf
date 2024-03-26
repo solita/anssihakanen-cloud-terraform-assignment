@@ -27,13 +27,9 @@ resource "azurerm_key_vault" "keyvault" {
       "Get",
     ]
   }
+
+resource ""
+
 }
 
 
-output "vault_uri" {
-  value = azurerm_key_vault.keyvault.vault_uri
-}
-
-output "vault_id" {
-  value = azurerm_key_vault.keyvault.id
-}
