@@ -1,0 +1,37 @@
+name: github-actions
+
+on:
+  pull_request:
+    branches: 
+      - 'main'
+
+jobs:
+  ubuntu-20:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Initialize Terraform
+        env:
+          ARM_CLIENT_ID: ${{ secrets.clientid }}
+          ARM_CLIENT_SECRET: ${{ secrets.clientsecret }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.subscriptionid }}
+
+        run: terraform init
+
+      - name: Format 
+        run: terraform fmt
+
+      - name: Validate
+        run: terraform validate
+
+      - name: Plan
+        if: github.event_name == 'pull_request'
+        run: terraform plan
+
+      - name: Apply
+        run: terraform apply -auto-approve
